@@ -11,25 +11,26 @@ public class PlayerMovement : MonoBehaviour
     public Collider meshCollider;
     public ParticleSystem glow;
     public VisualEffect electricity;
-    ParticleSystem.EmissionModule glowEmission;
-    Rigidbody rigidbody;
+    private ParticleSystem.EmissionModule glowEmission;
+    private new Rigidbody rigidbody;
 
-    PlayerControls controls;
-    Vector2 move;
+    private PlayerControls controls;
+    private Vector2 move;
 
     public Transform cam;
 
     public float turnSmoothTime = 0.1f;
     public float speed = 10f;
-    float turnSmoothVelocity;
+    public float dashSpeed = 10f;
+    private float turnSmoothVelocity;
 
     public int maxHealth = 50;
     public int currentHealth;
     public HealthBar healthBar;
 
-    float dashCooldown = 1f;
-    float nextDash;
-    bool isDashing = false;
+    private float dashCooldown = 1f;
+    private float nextDash;
+    private bool isDashing = false;
 
     private void Awake()
     {
@@ -45,20 +46,23 @@ public class PlayerMovement : MonoBehaviour
         controls.Gameplay.Move.canceled += ctx => move = Vector2.zero;
     }
 
-    IEnumerator Dash()
+    private IEnumerator Dash()
     {
         if (Time.time > nextDash)
         {
-            electricity.Stop();
+            if (electricity)
+            {
+                electricity.Stop();
+            }
 
             nextDash = Time.time + dashCooldown;
 
             meshCollider.isTrigger = true;
             isDashing = true;
 
-            rigidbody.AddRelativeForce(Vector3.forward * 50, ForceMode.VelocityChange);
+            rigidbody.AddRelativeForce(Vector3.forward * dashSpeed, ForceMode.VelocityChange);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
 
             rigidbody.velocity = Vector3.zero;
             rigidbody.angularVelocity = Vector3.zero;
@@ -68,7 +72,10 @@ public class PlayerMovement : MonoBehaviour
 
             yield return new WaitForSeconds(dashCooldown);
 
-            electricity.Play();
+            if (electricity)
+            {
+                electricity.Play();
+            }
         }
     }
 
@@ -110,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void TakeDamage(int damage)
+    private void TakeDamage(int damage)
     {
         currentHealth -= damage;
 

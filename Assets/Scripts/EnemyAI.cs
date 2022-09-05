@@ -37,13 +37,14 @@ public class EnemyAI : MonoBehaviour
     // Values for attack
     private float dashCooldown = 1f;
 
+    public int dashPower = 50;
     private float nextDash;
 
     // Values to rotate
     public float rotationSpeed;
 
     private Coroutine lookCoroutine;
-    private Rigidbody rigidbody;
+    private new Rigidbody rigidbody;
 
     private void Awake()
     {
@@ -59,22 +60,15 @@ public class EnemyAI : MonoBehaviour
 
     private void FixedUpdate()
     {
+        ChasePlayer();
+
         // Check for Player in sight or attack range
         playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
         playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 
-        if (!playerInSightRange && !playerInAttackRange)
+        if (playerInAttackRange)
         {
-            Patroling();
-        }
-        else if (playerInSightRange && playerInAttackRange && Time.time > nextDash)
-        {
-            nextDash = Time.time + dashCooldown;
             StartCoroutine(AttackPlayer());
-        }
-        else
-        {
-            ChasePlayer();
         }
     }
 
@@ -131,24 +125,38 @@ public class EnemyAI : MonoBehaviour
         {
             alreadyAttacked = true;
             StartRotating();
-            yield return new WaitForSeconds(3);
-            StartCoroutine(Dash());
+            yield return new WaitForSeconds(2);
+            if (Time.time > nextDash)
+            {
+                StartCoroutine(Dash());
+            }
         }
     }
 
     public void StartRotating()
     {
+        LookAt();
+        /*
         if (lookCoroutine != null)
         {
             StopCoroutine(lookCoroutine);
         }
 
         lookCoroutine = StartCoroutine(LookAt());
+        */
     }
 
-    private IEnumerator LookAt()
+    private void LookAt()
     {
-        Quaternion lookRotation = Quaternion.LookRotation(player.position - transform.position);
+        /*
+        var turnTowardNavSteeringTarget = agent.steeringTarget;
+
+        //Quaternion lookRotation = Quaternion.LookRotation(player.position - transform.position);
+        Vector3 direction = (turnTowardNavSteeringTarget - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+
+        //rigidbody.rotation = Quaternion.RotateTowards(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+        transform.Rotate(0, player.position.x * Time.deltaTime * rotationSpeed, 0);
 
         float time = 0f;
 
@@ -156,14 +164,17 @@ public class EnemyAI : MonoBehaviour
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, time);
 
-            time += Time.deltaTime * rotationSpeed;
+            time += Time.deltaTime;
 
             yield return null;
         }
+        */
     }
 
     private IEnumerator Dash()
     {
+        nextDash = Time.time + dashCooldown;
+
         electricity.Stop();
 
         agent.enabled = false;
@@ -173,7 +184,7 @@ public class EnemyAI : MonoBehaviour
         rigidbody.useGravity = true;
         rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
 
-        rigidbody.AddRelativeForce(Vector3.forward * 50, ForceMode.Impulse);
+        rigidbody.AddRelativeForce(Vector3.forward * dashPower, ForceMode.Impulse);
 
         yield return new WaitForSeconds(0.5f);
 
