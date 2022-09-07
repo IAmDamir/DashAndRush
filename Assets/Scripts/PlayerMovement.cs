@@ -7,6 +7,7 @@ using UnityEngine.VFX;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public RecordPlayer recorder;
     public Timer timer;
     public Spawner spawner;
 
@@ -143,6 +144,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (currentHealth < 1)
             {
+                recorder.ActivateDeathScreen();
                 spawner.enabled = false;
                 timer.StopTimer();
                 Destroy(player);

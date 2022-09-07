@@ -30,4 +30,9 @@ public class Timer : MonoBehaviour
     {
         isPlayerAlive = false;
     }
+
+    public float GetTime()
+    {
+        return time;
+    }
 }

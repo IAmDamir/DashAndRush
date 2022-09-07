@@ -19,7 +19,13 @@ public class HighScoreTable : MonoBehaviour
         entryTemplate.gameObject.SetActive(false);
 
         string jsonString = PlayerPrefs.GetString("highscoreTable");
-        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
+        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString) ??
+            new Highscores
+            {
+                highscoreEntryList =
+            new List<HighscoreEntry>{
+                new HighscoreEntry {name = "DIO", time = -9 } }
+            };
 
         for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
         {
@@ -84,14 +90,20 @@ public class HighScoreTable : MonoBehaviour
         transformlist.Add(entryTransform);
     }
 
-    private void AddHighscoreEntry(float time, string name)
+    public void AddHighscoreEntry(float time, string name)
     {
         // Create Highscore Entry
         HighscoreEntry highscoreEntry = new HighscoreEntry{time = time, name = name};
 
         // Load saved data
         string jsonString = PlayerPrefs.GetString("highscoreTable");
-        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
+        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString) ??
+            new Highscores
+            {
+                highscoreEntryList =
+            new List<HighscoreEntry>{
+                new HighscoreEntry {name = "DIO", time = -9 } }
+            };
 
         // Add new entry to highscores
         highscores.highscoreEntryList.Add(highscoreEntry);
