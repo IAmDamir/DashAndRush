@@ -50,7 +50,10 @@ public class EnemyAI : MonoBehaviour
     {
         currentHealth = maxHealth;
         //healthBar.SetMaxHealth(maxHealth);
-        player = GameObject.Find("Player").transform;
+        if (GameObject.Find("Player") != null)
+        {
+            player = GameObject.Find("Player").transform;
+        }
         agent = GetComponent<NavMeshAgent>();
         rigidbody = GetComponent<Rigidbody>();
         meshCollider = GetComponent<Collider>();
@@ -86,7 +89,7 @@ public class EnemyAI : MonoBehaviour
         {
             SearchWalkPoint();
         }
-        else if (walkPointSet)
+        else if (walkPointSet && player)
         {
             agent.SetDestination(walkPoint);
         }
@@ -116,7 +119,10 @@ public class EnemyAI : MonoBehaviour
 
     private void ChasePlayer()
     {
-        agent.SetDestination(player.position);
+        if (player)
+        {
+            agent.SetDestination(player.position);
+        }
     }
 
     private IEnumerator AttackPlayer()

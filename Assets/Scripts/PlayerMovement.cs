@@ -8,6 +8,7 @@ using UnityEngine.VFX;
 public class PlayerMovement : MonoBehaviour
 {
     public Timer timer;
+    public Spawner spawner;
 
     public GameObject player;
     public Collider meshCollider;
@@ -127,6 +128,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (currentHealth < 1)
         {
+            spawner.enabled = false;
             timer.StopTimer();
             Destroy(player);
         }
