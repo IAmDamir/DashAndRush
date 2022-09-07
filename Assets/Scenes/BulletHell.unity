@@ -2050,6 +2050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81793eac5b6572641a94004891028a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timer: {fileID: 0}
   player: {fileID: 1328614027}
   meshCollider: {fileID: 1328614029}
   glow: {fileID: 281223316}
@@ -2821,6 +2822,7 @@ GameObject:
   - component: {fileID: 1992997187}
   - component: {fileID: 1992997189}
   - component: {fileID: 1992997188}
+  - component: {fileID: 1992997190}
   m_Layer: 5
   m_Name: Timer
   m_TagString: Untagged
@@ -2944,6 +2946,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1992997186}
   m_CullTransparentMesh: 1
+--- !u!114 &1992997190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992997186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 492eb3d676e65254b8b021763978b244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeText: {fileID: 1992997188}
+  time: 0
 --- !u!1 &2049512911
 GameObject:
   m_ObjectHideFlags: 0

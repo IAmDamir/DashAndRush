@@ -177,7 +177,7 @@ public class EnemyAI : MonoBehaviour
 
         electricity.Stop();
 
-        agent.enabled = false;
+        //agent.enabled = false;
         meshCollider.isTrigger = true;
         rigidbody.isKinematic = false;
         rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
@@ -191,7 +191,7 @@ public class EnemyAI : MonoBehaviour
         rigidbody.velocity = Vector3.zero;
         rigidbody.angularVelocity = Vector3.zero;
 
-        agent.enabled = true;
+        //agent.enabled = true;
 
         rigidbody.velocity = Vector3.zero;
         rigidbody.angularVelocity = Vector3.zero;
