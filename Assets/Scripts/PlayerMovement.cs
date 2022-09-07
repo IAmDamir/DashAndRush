@@ -29,19 +29,25 @@ public class PlayerMovement : MonoBehaviour
 
     public int maxHealth = 50;
     public int currentHealth;
-    public HealthBar healthBar;
+    public float invulTime; // The time you stay invulnerable after a hit
+    private bool invulnerable = false;  // this boolean gets checked inside of the TakeDamage function.
+    public Bar healthBar;
 
-    private float dashCooldown = 1f;
+    public Bar cooldownBar;
+    public float dashCooldown = 1f;
     private float nextDash;
     private bool isDashing = false;
 
     private void Awake()
     {
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
-        controls = new PlayerControls();
         rigidbody = GetComponent<Rigidbody>();
         glowEmission = glow.emission;
+
+        currentHealth = maxHealth;
+        healthBar.SetMax(maxHealth);
+        cooldownBar.SetMax((int)(dashCooldown * 100));
+
+        controls = new PlayerControls();
 
         controls.Gameplay.Dash.performed += ctx => StartCoroutine(Dash());
 
@@ -118,19 +124,36 @@ public class PlayerMovement : MonoBehaviour
             // Move char. with rigidbody
             //rigidbody.MovePosition(transform.position + (moveDirection.normalized * Time.deltaTime * speed));
         }
+
+        if (nextDash > Time.time)
+        {
+            cooldownBar.SetCurrentValue(100 - (int)((nextDash - Time.time) * 100));
+        }
     }
 
     private void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-
-        healthBar.SetHealth(currentHealth);
-
-        if (currentHealth < 1)
+        if (!invulnerable)
         {
-            spawner.enabled = false;
-            timer.StopTimer();
-            Destroy(player);
+            currentHealth -= damage;
+
+            healthBar.SetCurrentValue(currentHealth);
+
+            StartCoroutine(JustHurt());
+
+            if (currentHealth < 1)
+            {
+                spawner.enabled = false;
+                timer.StopTimer();
+                Destroy(player);
+            }
         }
+    }
+
+    private IEnumerator JustHurt()
+    {
+        invulnerable = true;
+        yield return new WaitForSeconds(invulTime);
+        invulnerable = false;
     }
 }

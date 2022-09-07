@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class Bar : MonoBehaviour
 {
     public Slider slider;
     public Gradient gradient;
     public Image fill;
 
-    public void SetMaxHealth(int health)
+    public void SetMax(int val)
     {
-        slider.maxValue = health;
-        slider.value = health;
+        slider.maxValue = val;
+        slider.value = val;
 
         fill.color = gradient.Evaluate(1f);
     }
 
-    public void SetHealth(int health)
+    public void SetCurrentValue(int val)
     {
-        slider.value = health;
+        slider.value = val;
 
         fill.color = gradient.Evaluate(slider.normalizedValue);
     }
