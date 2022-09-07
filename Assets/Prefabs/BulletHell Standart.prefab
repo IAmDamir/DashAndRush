@@ -199,9 +199,8 @@ MonoBehaviour:
   agent: {fileID: 1294066747440892081}
   meshCollider: {fileID: 1294066747440892086}
   electricity: {fileID: 1294066747101563415}
-  maxHealth: 40
+  maxHealth: 20
   currentHealth: 0
-  healthBar: {fileID: 0}
   player: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
