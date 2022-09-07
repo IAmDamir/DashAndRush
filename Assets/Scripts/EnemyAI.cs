@@ -12,7 +12,7 @@ public class EnemyAI : MonoBehaviour
 
     public int maxHealth = 30;
     public int currentHealth;
-    public HealthBar healthBar;
+    //public HealthBar healthBar;
 
     public Transform player;
 
@@ -49,7 +49,7 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        //healthBar.SetMaxHealth(maxHealth);
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         rigidbody = GetComponent<Rigidbody>();
@@ -210,7 +210,7 @@ public class EnemyAI : MonoBehaviour
     {
         currentHealth -= damage;
 
-        healthBar.SetHealth(currentHealth);
+        //healthBar.SetHealth(currentHealth);
 
         if (currentHealth < 1)
         {

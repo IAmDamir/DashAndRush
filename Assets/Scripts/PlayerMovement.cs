@@ -7,6 +7,8 @@ using UnityEngine.VFX;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Timer timer;
+
     public GameObject player;
     public Collider meshCollider;
     public ParticleSystem glow;
@@ -125,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (currentHealth < 1)
         {
+            timer.StopTimer();
             Destroy(player);
         }
     }
