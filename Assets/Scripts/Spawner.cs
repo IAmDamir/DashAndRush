@@ -6,11 +6,11 @@ public class Spawner : MonoBehaviour
 {
     public float spawnDelay;
     public GameObject[] enemies;
-    float widgh;
+    float width;
     float timer;
     void Start()
     {
-        widgh = transform.localScale.x;
+        width = transform.localScale.x;
     }
 
     // Update is called once per frame
@@ -19,7 +19,7 @@ public class Spawner : MonoBehaviour
         if (timer >= spawnDelay)
         {
             Instantiate(enemies[Random.Range(0, enemies.Length)],
-                new Vector3(Random.Range(transform.position.x - (widgh / 2), transform.position.x + (widgh / 2)), transform.position.y, transform.position.z), 
+                new Vector3(Random.Range(transform.position.x - (width / 2), transform.position.x + (width / 2)), transform.position.y, transform.position.z), 
                 Quaternion.identity, 
                 gameObject.transform.GetChild(0));
 
