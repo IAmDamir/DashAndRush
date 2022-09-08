@@ -13,11 +13,10 @@ public class RecordPlayer : MonoBehaviour
 
     public HighScoreTable table;
 
+    public TMPro.TextMeshProUGUI playername;
+    public TMPro.TextMeshProUGUI usernameDeathscreen;
     public TMPro.TextMeshProUGUI elapsedTime;
     public Timer timer;
-    private float time;
-
-    public TMPro.TMP_InputField name;
 
     private void Awake()
     {
@@ -28,10 +27,15 @@ public class RecordPlayer : MonoBehaviour
     {
         controls.Gameplay.Enable();
 
-        time = timer.GetTime() + 1;
+        string name = playername.text ?? "DIO";
+        float time = timer.GetTime() + 1;
         float minutes = Mathf.FloorToInt(time / 60);
         float seconds = Mathf.FloorToInt(time % 60);
+
         elapsedTime.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        usernameDeathscreen.text = name.ToUpper();
+
+        table.AddHighscoreEntry(time, name.ToUpper());
     }
 
     private void OnDisable()
@@ -45,12 +49,8 @@ public class RecordPlayer : MonoBehaviour
         DeathScreen.SetActive(true);
     }
 
-    public void InputName()
+    public void PlayAgain()
     {
-        string playerName = name.text ?? "DIO";
-
-        table.AddHighscoreEntry(time, playerName.ToUpper());
-
         var scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
     }
