@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         pauseMenuUI.SetActive(false);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("BulletHell");
     }
 
     public void QuitGame()
