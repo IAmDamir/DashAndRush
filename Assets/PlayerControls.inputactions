@@ -37,7 +37,7 @@
                 {
                     "name": "",
                     "id": "34a3e02f-4e44-4115-afcd-9037761a38d2",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<XInputController>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "GamePad",
