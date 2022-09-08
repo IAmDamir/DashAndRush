@@ -54,4 +54,8 @@ public class RecordPlayer : MonoBehaviour
         var scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
     }
+    public void Exit()
+    {
+        Application.Quit();
+    }
 }
