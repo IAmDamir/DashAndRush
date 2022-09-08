@@ -130,6 +130,10 @@ public class PlayerMovement : MonoBehaviour
         {
             cooldownBar.SetCurrentValue(100 - (int)((nextDash - Time.time) * 100));
         }
+        if(transform.position.y < 0)
+        {
+            TakeDamage(maxHealth + 1); 
+        }
     }
 
     private void TakeDamage(int damage)
